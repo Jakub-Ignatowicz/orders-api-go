@@ -1,30 +1,19 @@
 package main
 
 import (
+	"context"
 	"fmt"
-	"net/http"
+
+	"github.com/Jakub-Ignatowicz/orders-api-go/application"
 )
 
 func main() {
-	server := &http.Server{
-		Addr:    ":3000",
-		Handler: http.HandlerFunc(basicHandler),
-	}
+	app := application.New()
 
-	err := server.ListenAndServe()
+	err := app.Start(context.TODO())
+
 	if err != nil {
-		fmt.Println("filed to listen to server", err)
-	}
-}
-
-func basicHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodGet {
-		if r.URL.Path == "/foo" {
-
-		}
+		fmt.Println("failed to start app: ", err)
 	}
 
-	if r.Method == http.MethodPost {
-
-	}
 }
